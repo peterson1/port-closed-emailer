@@ -1,6 +1,6 @@
-﻿using MvvmCross.ViewModels;
+﻿using MvvmCross;
+using MvvmCross.ViewModels;
 using PortClosedEmailer.Core.Configuration;
-using PortClosedEmailer.Core.LoopToggling;
 using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
@@ -9,13 +9,11 @@ namespace PortClosedEmailer.Core.ViewModels
 {
     public class HomeViewModel : MvxViewModel
     {
-        private readonly ILoopToggler _togl;
         private readonly IAppSettings _cfg;
 
 
-        public HomeViewModel(ILoopToggler loopToggler, IAppSettings appSettings)
+        public HomeViewModel(IAppSettings appSettings)
         {
-            _togl = loopToggler ?? throw new ArgumentNullException();
             _cfg  = appSettings ?? throw new ArgumentNullException();
         }
 
@@ -23,9 +21,15 @@ namespace PortClosedEmailer.Core.ViewModels
         public override async Task Initialize()
         {
             await base.Initialize();
-            _cfg.HostsList.ForEach(_ => HostNames.Add(_));
+            foreach (var host in _cfg.HostsList)
+            {
+                var vm = Mvx.IoCProvider.Resolve<HostScanViewModel>();
+                vm.HostName = host;
+                Hosts.Add(vm);
+                vm.StartScanCmd.Execute();
+            }
         }
 
-        public ObservableCollection<string> HostNames { get; } = new ObservableCollection<string>();
+        public ObservableCollection<HostScanViewModel> Hosts { get; } = new ObservableCollection<HostScanViewModel>();
     }
 }

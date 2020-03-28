@@ -3,7 +3,6 @@ using MvvmCross.IoC;
 using MvvmCross.ViewModels;
 using PortClosedEmailer.Core.Configuration;
 using PortClosedEmailer.Core.EmailSending;
-using PortClosedEmailer.Core.LoopToggling;
 using PortClosedEmailer.Core.PortScanning;
 using PortClosedEmailer.Core.ScannerLooping;
 using PortClosedEmailer.Core.ViewModels;
@@ -24,10 +23,11 @@ namespace PortClosedEmailer.Core
             Mvx.IoCProvider.RegisterSingleton<IAppSettings>(_cfg);
 
             AddSingleton<IEmailSender, SmtpClientSender1>();
-            AddSingleton<IScannerLooper, ScannerLooper1>();
-            AddSingleton<ILoopToggler, LoopToggler1>();
+            AddSingleton<IPortScanner, TcpClientPortScanner1>();
 
-            AddTransient<IPortScanner, TcpClientPortScanner1>();
+            AddTransient<IScannerLooper, ScannerLooper1>();
+
+            Mvx.IoCProvider.RegisterType<HostScanViewModel>();
 
             RegisterAppStart<HomeViewModel>();
         }

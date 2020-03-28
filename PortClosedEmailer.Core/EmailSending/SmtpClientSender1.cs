@@ -1,4 +1,5 @@
-﻿using PortClosedEmailer.Core.Configuration;
+﻿using CommonLib.StringTools;
+using PortClosedEmailer.Core.Configuration;
 using System;
 using System.Net;
 using System.Net.Mail;
@@ -25,8 +26,9 @@ namespace PortClosedEmailer.Core.EmailSending
 
         private async Task SendEmail(string subject, string body, int credentialsIndex = 0)
         {
-            var message = NewMailMessage(subject, body);
-            var smtp    = GetSmtpClient(_cfg.SmtpCredentials[credentialsIndex]);
+            var creds   = _cfg.SmtpCredentials[credentialsIndex];
+            var message = NewMailMessage(subject, body, creds);
+            var smtp    = GetSmtpClient(creds);
             try
             {
                 await smtp.SendMailAsync(message);
@@ -42,9 +44,10 @@ namespace PortClosedEmailer.Core.EmailSending
         }
 
 
-        private MailMessage NewMailMessage(string subject, string body)
+        private MailMessage NewMailMessage(string subject, string body, (string Username, string Password) creds)
         {
-            var fromAddr = new MailAddress(_cfg.SenderEmail, _cfg.SenderDisplayName);
+            var sendr    = _cfg.SenderEmail.IsBlank() ? creds.Username : _cfg.SenderEmail;
+            var fromAddr = new MailAddress(sendr, _cfg.SenderDisplayName);
             var toAddr   = new MailAddress(_cfg.RecipientEmail);
             return new MailMessage(fromAddr, toAddr)
             {
