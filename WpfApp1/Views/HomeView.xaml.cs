@@ -1,10 +1,10 @@
 ﻿using MvvmCross.Platforms.Wpf.Views;
 
-namespace WpfApp1
+namespace WpfApp1.Views
 {
-    public partial class MainWindow : MvxWindow
+    public partial class HomeView : MvxWpfView
     {
-        public MainWindow()
+        public HomeView()
         {
             InitializeComponent();
         }

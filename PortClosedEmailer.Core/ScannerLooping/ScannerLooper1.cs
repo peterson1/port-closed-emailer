@@ -17,7 +17,7 @@ namespace PortClosedEmailer.Core.ScannerLooping
 
         public ScannerLooper1(IPortScanner portScanner,
                               IEmailSender emailSender,
-                              AppSettings appSettings) : base(appSettings)
+                              IAppSettings appSettings) : base(appSettings)
         {
             _scanr  = portScanner ?? throw new ArgumentNullException();
             _emailr = emailSender ?? throw new ArgumentNullException();

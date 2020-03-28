@@ -2,11 +2,12 @@
 using PortClosedEmailer.Core.Configuration;
 using System;
 using System.IO;
+using WpfApp1;
 using static System.Environment;
 
 namespace Tests.Configuration
 {
-    public class TestSettings : AppSettings
+    public class TestSettings : WpfAppSettings
     {
         private const string DIR = "Port-closed Emailer files";
 

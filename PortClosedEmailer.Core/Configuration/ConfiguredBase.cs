@@ -4,10 +4,10 @@ namespace PortClosedEmailer.Core.Configuration
 {
     public abstract class ConfiguredBase
     {
-        protected readonly AppSettings _cfg;
+        protected readonly IAppSettings _cfg;
 
 
-        public ConfiguredBase(AppSettings appSettings)
+        public ConfiguredBase(IAppSettings appSettings)
         {
             _cfg = appSettings ?? throw new ArgumentNullException();
         }

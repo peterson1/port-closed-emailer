@@ -17,6 +17,7 @@
   <ItemGroup>
     <ProjectReference Include="..\CommonLib\CommonLib.csproj" />
     <ProjectReference Include="..\PortClosedEmailer.Core\PortClosedEmailer.Core.csproj" />
+    <ProjectReference Include="..\WpfApp1\WpfApp1.csproj" />
   </ItemGroup>
 
 </Project>

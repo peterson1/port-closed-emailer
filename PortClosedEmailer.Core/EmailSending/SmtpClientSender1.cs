@@ -1,8 +1,5 @@
 ﻿using PortClosedEmailer.Core.Configuration;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
@@ -13,17 +10,14 @@ namespace PortClosedEmailer.Core.EmailSending
     {
         public event EventHandler<Exception> SendingError;
 
-        private List<(string Username, string Password)> _creds;
 
-
-        public SmtpClientSender1(AppSettings appSettings) : base(appSettings)
+        public SmtpClientSender1(IAppSettings appSettings) : base(appSettings)
         {
         }
 
 
         public Task SendPortClosedAlert(string hostName)
         {
-            if (_creds == null) FillCredentials();
             var body = $"Failed to connect to host:{Environment.NewLine}{hostName}";
             return SendEmail($"Host down: {hostName}", body);
         }
@@ -32,7 +26,7 @@ namespace PortClosedEmailer.Core.EmailSending
         private async Task SendEmail(string subject, string body, int credentialsIndex = 0)
         {
             var message = NewMailMessage(subject, body);
-            var smtp    = GetSmtpClient(_creds[credentialsIndex]);
+            var smtp    = GetSmtpClient(_cfg.SmtpCredentials[credentialsIndex]);
             try
             {
                 await smtp.SendMailAsync(message);
@@ -41,7 +35,7 @@ namespace PortClosedEmailer.Core.EmailSending
             {
                 SendingError?.Invoke(this, ex);
                 await Task.Delay(1000 * 2);
-                var nextIdx = (credentialsIndex == _creds.Count - 1)
+                var nextIdx = (credentialsIndex == _cfg.SmtpCredentials.Count - 1)
                             ? 0 : credentialsIndex + 1;
                 await SendEmail(subject, body, nextIdx);
             }
@@ -69,25 +63,5 @@ namespace PortClosedEmailer.Core.EmailSending
             UseDefaultCredentials = false,
             Credentials           = new NetworkCredential(creds.Username, creds.Password)
         };
-
-
-        private void FillCredentials()
-        {
-            var lines = File.ReadAllLines(_cfg.SmtpCredentialsFile);
-            _creds = lines.Select((_, i) => ParseCredentialLine(_, i)).ToList();
-        }
-
-
-        private (string Username, string Password) ParseCredentialLine(string line, int i)
-        {
-            if (!line.Contains(":"))
-                throw new ArgumentException($"[{i}] Username and password should be separated by “:”");
-            
-            var ss = line.Split(':');
-            if (ss.Length != 2)
-                throw new ArgumentException($"[{i}] Invalid credentials line format");
-
-            return (ss[0], ss[1]);
-        }
     }
 }
