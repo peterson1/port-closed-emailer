@@ -19,7 +19,7 @@ namespace PortClosedEmailer.Core.ViewModels
         {
             _scanr       = scannerLooper ?? throw new ArgumentNullException();
             _scanr.FoundOpen   += (s, e) => DisplayOpen();
-            _scanr.FoundClosed += (s, e) => Status = "Closed";
+            _scanr.FoundClosed += (s, e) => DisplayClosed();
             StartScanCmd = new MvxCommand(() => JobNotifier = CreateNotifier());
             StopScanCmd  = new MvxCommand(() => StopScanning());
         }
@@ -28,9 +28,10 @@ namespace PortClosedEmailer.Core.ViewModels
         public string   HostName  { get; set; }
         public string   Status    { get; private set; }
         public string   Error     { get; private set; }
+        public bool?    IsOpen    { get; private set; }
 
-        public IMvxCommand   StartScanCmd  { get; private set; }
-        public IMvxCommand   StopScanCmd   { get; private set; }
+        public IMvxCommand   StartScanCmd  { get; }
+        public IMvxCommand   StopScanCmd   { get; }
         public MvxNotifyTask JobNotifier   { get; private set; }
 
 
@@ -44,7 +45,15 @@ namespace PortClosedEmailer.Core.ViewModels
         {
             _dots += " . ";
             if (_dots.Length >= 15) _dots = " . ";
+            IsOpen = true;
             Status = $"Open [{_dots}]";
+        }
+
+
+        private void DisplayClosed()
+        {
+            IsOpen = false;
+            Status = "Closed";
         }
 
 
@@ -59,6 +68,7 @@ namespace PortClosedEmailer.Core.ViewModels
         {
             _cancelSrc?.Cancel();
             Status = "";
+            IsOpen = null;
         }
 
 
