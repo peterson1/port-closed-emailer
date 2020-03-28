@@ -38,8 +38,11 @@
             <DataGridTemplateColumn Header="host" HeaderStyle="{StaticResource CenteredColumnHeaders}">
                 <DataGridTemplateColumn.CellTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding HostName}" HorizontalAlignment="Right"
-                                       Margin="30 0 10 0" VerticalAlignment="Center" />
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <TextBlock Text="{Binding HostName}" HorizontalAlignment="Right"
+                                           Margin="30 0 10 0" VerticalAlignment="Center" />
+                            <TextBlock Text="{Binding Error}" />
+                        </StackPanel>
                     </DataTemplate>
                 </DataGridTemplateColumn.CellTemplate>
             </DataGridTemplateColumn>
@@ -49,7 +52,6 @@
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="{Binding Status}" Margin="10 0 0 0" VerticalAlignment="Center" />
-                            <TextBlock Text="{Binding Error}" />
                         </StackPanel>
                     </DataTemplate>
                 </DataGridTemplateColumn.CellTemplate>

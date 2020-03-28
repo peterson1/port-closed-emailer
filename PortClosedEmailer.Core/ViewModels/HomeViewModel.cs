@@ -1,4 +1,5 @@
-﻿using MvvmCross;
+﻿using CommonLib.StringTools;
+using MvvmCross;
 using MvvmCross.Commands;
 using MvvmCross.ViewModels;
 using PortClosedEmailer.Core.Configuration;
@@ -24,6 +25,7 @@ namespace PortClosedEmailer.Core.ViewModels
         {
             await base.Initialize();
             _cfg.HostsList.ForEach(_ => AddHost(_));
+            ShowNewHostField = false;
         }
 
 
@@ -31,14 +33,19 @@ namespace PortClosedEmailer.Core.ViewModels
         public IMvxCommand  AddHostCmd  { get; }
         public string NewHostName { get; set; }
 
-        private void AddHost(string hostAndPort)
+        public bool ShowNewHostField { get; private set; }
+
+        public void AddHost(string hostAndPort)
         {
+            ShowNewHostField = true;
+            if (hostAndPort.IsBlank()) return;
             if (hostAndPort.StartsWith("//")) return;
             var vm = Mvx.IoCProvider.Resolve<HostScanViewModel>();
             vm.HostName = hostAndPort;
             Hosts.Add(vm);
             vm.StartScanCmd.Execute();
             NewHostName = "";
+            ShowNewHostField = false;
         }
     }
 }

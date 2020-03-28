@@ -12,9 +12,10 @@
     <StackPanel>
         <local:HostsDataGrid />
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-            <TextBox Text="{Binding NewHostName, Mode=TwoWay}" VerticalAlignment="Center"
-                     Width="300" Padding="10 5 5 5" VerticalContentAlignment="Center" />
-            <Button Content="add host" Command="{Binding AddHostCmd}" 
+            <TextBox x:Name="newHostTxt" Text="{Binding NewHostName, Mode=TwoWay}" VerticalAlignment="Center"
+                     Width="300" Padding="10 5 5 5" VerticalContentAlignment="Center"
+                     Visibility="{Binding ShowNewHostField, Converter={StaticResource BoolToVis}}" />
+            <Button x:Name="addHostBtn" Content="add host" Command="{Binding AddHostCmd}" IsDefault="True"
                     HorizontalAlignment="Right" Padding="10 5 10 5" Margin="10 10 10 10" />
         </StackPanel>
     </StackPanel>
