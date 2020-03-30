@@ -1,4 +1,5 @@
-﻿using PortClosedEmailer.Core.Configuration;
+﻿using CommonLib.StringTools;
+using PortClosedEmailer.Core.Configuration;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,9 +9,6 @@ namespace WpfApp1
 {
     public class WpfAppSettings : IAppSettings
     {
-        private List<string> _hosts;
-        private List<(string Username, string Password)> _creds;
-
         public string   RecipientEmail       { get; set; }
         public string   SenderDisplayName    { get; set; }
         public string   SmtpHostName         { get; set; }
@@ -19,29 +17,47 @@ namespace WpfApp1
 
         //optionals
         public string   SenderEmail          { get; set; }
-        public int?     SmtpPortNumber       { get; set; }
-        public bool?    SmtpEnableSSL        { get; set; }
-        public int?     LoopDelaySeconds     { get; set; }
+        public int      SmtpPortNumber       { get; set; }
+        public bool     SmtpEnableSSL        { get; set; }
+        public int      LoopDelaySeconds     { get; set; }
 
 
-        public List<string> HostsList 
-            => _hosts ?? (_hosts = LoadHostsList());
+        public List<string> HostsList { get; set; }
+        public List<(string Username, string Password)> SmtpCredentials { get; set; }
 
 
-        public List<(string Username, string Password)> SmtpCredentials
-            => _creds ?? (_creds = LoadCredentials());
-
-
-        private List<string> LoadHostsList()
+        public WpfAppSettings LoadExternalLists()
         {
-            return File.ReadAllLines(HostsListFile).ToList();
+            AppendHostsList();
+            AppendCredentialsList();
+            return this;
         }
 
 
-        private List<(string Username, string Password)> LoadCredentials()
+        public WpfAppSettings SetDefaultValues()
         {
+            SenderEmail      = "";
+            SmtpPortNumber   = 587;
+            SmtpEnableSSL    = true;
+            LoopDelaySeconds = 2;
+            return this;
+        }
+
+
+        private void AppendHostsList()
+        {
+            if (HostsList == null) HostsList = new List<string>();
+            if (HostsListFile.IsBlank()) return;
+            HostsList.AddRange(File.ReadAllLines(HostsListFile));
+        }
+
+
+        private void AppendCredentialsList()
+        {
+            if (SmtpCredentials == null) SmtpCredentials = new List<(string Username, string Password)>();
+            if (SmtpCredentialsFile.IsBlank()) return;
             var lines = File.ReadAllLines(SmtpCredentialsFile);
-            return lines.Select((_, i) => ParseCredentialLine(_, i)).ToList();
+            SmtpCredentials.AddRange(lines.Select((_, i) => ParseCredentialLine(_, i)));
         }
         
 

@@ -12,8 +12,8 @@ namespace PortClosedEmailer.Core.Configuration
 
         //optionals
         string   SenderEmail          { get; }
-        int?     SmtpPortNumber       { get; }
-        bool?    SmtpEnableSSL        { get; }
-        int?     LoopDelaySeconds     { get; }
+        int      SmtpPortNumber       { get; }
+        bool     SmtpEnableSSL        { get; }
+        int      LoopDelaySeconds     { get; }
     }
 }

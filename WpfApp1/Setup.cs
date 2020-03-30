@@ -1,10 +1,7 @@
-﻿using MvvmCross;
-using MvvmCross.Base;
-using MvvmCross.Platforms.Wpf.Core;
+﻿using MvvmCross.Platforms.Wpf.Core;
 using MvvmCross.ViewModels;
 using Newtonsoft.Json;
 using PortClosedEmailer.Core.Configuration;
-using System;
 using System.IO;
 
 namespace WpfApp1
@@ -22,7 +19,9 @@ namespace WpfApp1
         {
             //todo: handle missing config
             var json = File.ReadAllText(jsonFilename);
-            return JsonConvert.DeserializeObject<WpfAppSettings>(json);
+            var cfg  = JsonConvert.DeserializeObject<WpfAppSettings>(json);
+            return cfg.LoadExternalLists()
+                      .SetDefaultValues();
         }
     }
 }

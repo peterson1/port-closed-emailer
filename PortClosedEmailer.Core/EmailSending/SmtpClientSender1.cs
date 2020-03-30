@@ -60,8 +60,8 @@ namespace PortClosedEmailer.Core.EmailSending
         private SmtpClient GetSmtpClient((string Username, string Password) creds) => new SmtpClient
         {
             Host                  = _cfg.SmtpHostName,
-            Port                  = _cfg.SmtpPortNumber ?? 587,
-            EnableSsl             = _cfg.SmtpEnableSSL  ?? true,
+            Port                  = _cfg.SmtpPortNumber,
+            EnableSsl             = _cfg.SmtpEnableSSL,
             DeliveryMethod        = SmtpDeliveryMethod.Network,
             UseDefaultCredentials = false,
             Credentials           = new NetworkCredential(creds.Username, creds.Password)
