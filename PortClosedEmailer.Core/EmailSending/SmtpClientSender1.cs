@@ -44,7 +44,7 @@ namespace PortClosedEmailer.Core.EmailSending
         }
 
 
-        private MailMessage NewMailMessage(string subject, string body, (string Username, string Password) creds)
+        private MailMessage NewMailMessage(string subject, string body, SmtpCredential creds)
         {
             var sendr    = _cfg.SenderEmail.IsBlank() ? creds.Username : _cfg.SenderEmail;
             var fromAddr = new MailAddress(sendr, _cfg.SenderDisplayName);
@@ -57,11 +57,11 @@ namespace PortClosedEmailer.Core.EmailSending
         }
 
 
-        private SmtpClient GetSmtpClient((string Username, string Password) creds) => new SmtpClient
+        private SmtpClient GetSmtpClient(SmtpCredential creds) => new SmtpClient
         {
             Host                  = _cfg.SmtpHostName,
-            Port                  = _cfg.SmtpPortNumber,
-            EnableSsl             = _cfg.SmtpEnableSSL,
+            Port                  = _cfg.SmtpPortNumber.Value,
+            EnableSsl             = _cfg.SmtpEnableSSL.Value,
             DeliveryMethod        = SmtpDeliveryMethod.Network,
             UseDefaultCredentials = false,
             Credentials           = new NetworkCredential(creds.Username, creds.Password)

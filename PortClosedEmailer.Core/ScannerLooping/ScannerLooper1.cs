@@ -36,7 +36,7 @@ namespace PortClosedEmailer.Core.ScannerLooping
                     await _emailr.SendPortClosedAlert(hostAndPort);
                     return;
                 }
-                await Task.Delay(1000 * (_cfg.LoopDelaySeconds));
+                await Task.Delay(1000 * (_cfg.LoopDelaySeconds.Value));
             }
         }
     }
