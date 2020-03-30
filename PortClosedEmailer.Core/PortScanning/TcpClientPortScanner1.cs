@@ -6,14 +6,19 @@ namespace PortClosedEmailer.Core.PortScanning
 {
     public class TcpClientPortScanner1 : IPortScanner
     {
-        public async Task<bool> IsPortOpen(string hostName, int portNumber)
+        public TimeSpan TimeOut { get; set; } = TimeSpan.FromSeconds(2);
+
+
+        public async Task<bool> IsPortOpen(string host, int port)
         {
             using (var client = new TcpClient())
             {
                 try
                 {
-                    await client.ConnectAsync(hostName, portNumber);
-                    return true;
+                    var res = client.BeginConnect(host, port, null, null);
+                    var ok  = await Task.Run(() => res.AsyncWaitHandle.WaitOne(TimeOut));
+                    if (ok) client.EndConnect(res);
+                    return ok;
                 }
                 catch 
                 {

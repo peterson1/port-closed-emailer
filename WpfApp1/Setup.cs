@@ -20,6 +20,7 @@ namespace WpfApp1
 
         private IAppSettings LoadConfig(string jsonFilename)
         {
+            //todo: handle missing config
             var json = File.ReadAllText(jsonFilename);
             return JsonConvert.DeserializeObject<WpfAppSettings>(json);
         }

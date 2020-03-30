@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace PortClosedEmailer.Core.PortScanning
 {
@@ -6,5 +7,8 @@ namespace PortClosedEmailer.Core.PortScanning
     {
         Task<bool>  IsPortOpen  (string hostName, int portNumber);
         Task<bool>  IsPortOpen  (string hostNameWithPortNumber);
+
+
+        TimeSpan    TimeOut   { get; set; }
     }
 }
