@@ -1,4 +1,5 @@
 ﻿using CommonLib.StringTools;
+using MvvmCross.Logging;
 using PortClosedEmailer.Core.Configuration;
 using System;
 using System.Net;
@@ -12,7 +13,7 @@ namespace PortClosedEmailer.Core.EmailSending
         public event EventHandler<Exception> SendingError;
 
 
-        public SmtpClientSender1(IAppSettings appSettings) : base(appSettings)
+        public SmtpClientSender1(IAppSettings appSettings, IMvxLogProvider mvxLogProvider) : base(appSettings, mvxLogProvider)
         {
         }
 

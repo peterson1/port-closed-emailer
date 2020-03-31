@@ -1,6 +1,7 @@
 ﻿using CommonLib.StringTools;
 using MvvmCross;
 using MvvmCross.Commands;
+using MvvmCross.Logging;
 using MvvmCross.ViewModels;
 using PortClosedEmailer.Core.Configuration;
 using System;
@@ -9,14 +10,10 @@ using System.Threading.Tasks;
 
 namespace PortClosedEmailer.Core.ViewModels
 {
-    public class HomeViewModel : MvxViewModel
+    public class HomeViewModel : ConfiguredViewModelBase
     {
-        private readonly IAppSettings _cfg;
-
-
-        public HomeViewModel(IAppSettings appSettings)
+        public HomeViewModel(IAppSettings appSettings, IMvxLogProvider mvxLogProvider) : base(appSettings, mvxLogProvider)
         {
-            _cfg = appSettings ?? throw new ArgumentNullException();
             AddHostCmd = new MvxCommand(() => AddHost(NewHostName));
         }
 
@@ -26,6 +23,7 @@ namespace PortClosedEmailer.Core.ViewModels
             await base.Initialize();
             _cfg.HostsList.ForEach(_ => AddHost(_));
             ShowNewHostField = false;
+            LogInfo("App initialized.");
         }
 
 

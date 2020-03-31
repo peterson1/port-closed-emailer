@@ -1,12 +1,12 @@
 ﻿using CommonLib.ExceptionTools;
-using CommonLib.StringTools;
+using MvvmCross.Logging;
 using MvvmCross.Platforms.Wpf.Core;
 using MvvmCross.ViewModels;
-using Newtonsoft.Json;
-using PortClosedEmailer.Core.Configuration;
+using Serilog;
 using System;
-using System.IO;
 using System.Windows;
+using WpfApp1.Configuration;
+using WpfApp1.WpfTools;
 
 namespace WpfApp1
 {
@@ -14,53 +14,36 @@ namespace WpfApp1
     {
         protected override IMvxApplication CreateApp()
         {
-            var cfg = LoadConfig("appsettings.json");
+            //GlobalErrors.HandleAll();
+            var cfg = WpfAppSettings.LoadJson("appsettings.json");
             try
             {
                 return new PortClosedEmailer.Core.App(cfg);
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Info(), "Setup.CreateApp");
+                Alert.Show(ex, "Setup.CreateApp");
                 App.Current.Shutdown();
                 throw ex;
             }
         }
 
 
-        private IAppSettings LoadConfig(string jsonFilename)
-        {
-            //todo: handle missing config
-            if (!File.Exists(jsonFilename))
-                CreateDefaultSettingsFile(jsonFilename);
-            try
-            {
-                var json = File.ReadAllText(jsonFilename);
-                var cfg = JsonConvert.DeserializeObject<WpfAppSettings>(json);
-                cfg.LoadExternalLists();
-                cfg.SetDefaultValues();
-                cfg.ValidateValues();
-                return cfg;
-            }
-            catch (Exception ex)
-            {
-                var cap = $"Invalid {jsonFilename}";
-                var msg = ex.Info(false, false) + L.F
-                      + $"Please edit the file “{jsonFilename}”" + L.f
-                      +  "and correct the invalid values.";
-                MessageBox.Show(msg, cap);
-                App.Current.Shutdown();
-                return null;
-            }
-        }
+        public override MvxLogProviderType GetDefaultLogProviderType()
+            => MvxLogProviderType.Serilog;
 
 
-        private void CreateDefaultSettingsFile(string jsonFilename)
+        protected override IMvxLogProvider CreateLogProvider()
         {
-            var cfg = new WpfAppSettings();
-            cfg.SetDefaultValues();
-            var json = JsonConvert.SerializeObject(cfg, Formatting.Indented);
-            File.WriteAllText(jsonFilename, json);
+            var fmt = "{Timestamp:yyyy-MM-dd HH:mm:ss.fff} [{class}.{method}] {Message:lj}{NewLine}{Exception}";
+            Log.Logger = new LoggerConfiguration()
+                    .MinimumLevel.Debug()
+                    .Enrich.FromLogContext()
+                    .WriteTo.File(@"logs\debug.log", 
+                            rollingInterval: RollingInterval.Day, 
+                            outputTemplate: fmt)
+                    .CreateLogger();
+            return base.CreateLogProvider();
         }
     }
 }

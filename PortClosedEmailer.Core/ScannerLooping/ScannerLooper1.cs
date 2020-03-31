@@ -1,4 +1,5 @@
-﻿using PortClosedEmailer.Core.Configuration;
+﻿using MvvmCross.Logging;
+using PortClosedEmailer.Core.Configuration;
 using PortClosedEmailer.Core.EmailSending;
 using PortClosedEmailer.Core.PortScanning;
 using System;
@@ -17,7 +18,7 @@ namespace PortClosedEmailer.Core.ScannerLooping
 
         public ScannerLooper1(IPortScanner portScanner,
                               IEmailSender emailSender,
-                              IAppSettings appSettings) : base(appSettings)
+                              IAppSettings appSettings, IMvxLogProvider mvxLogProvider) : base(appSettings, mvxLogProvider)
         {
             _scanr  = portScanner ?? throw new ArgumentNullException();
             _emailr = emailSender ?? throw new ArgumentNullException();
