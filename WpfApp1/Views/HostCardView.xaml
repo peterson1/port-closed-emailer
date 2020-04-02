@@ -1,0 +1,86 @@
+﻿<UserControl x:Class="WpfApp1.Views.HostCardView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfApp1.Views"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Flipper.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <Style x:Key="blueIfOpen" TargetType="Grid">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding IsOpen}" Value="true">
+                        <Setter Property="Background" Value="SkyBlue" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding IsOpen}" Value="false">
+                        <Setter Property="Background" Value="Red" />
+                        <Setter Property="TextBlock.Foreground" Value="White" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+            <Style x:Key="playPause" TargetType="Button" BasedOn="{StaticResource MaterialDesignIconForegroundButton}">
+                <Setter Property="HorizontalAlignment" Value="Left" />
+                <Setter Property="VerticalAlignment" Value="Bottom" />
+                <Setter Property="Foreground" Value="{StaticResource MaterialDesignLightForeground}" />
+                <Setter Property="Margin" Value="0 20 0 0" />
+            </Style>
+        </ResourceDictionary>        
+    </UserControl.Resources>
+
+    <md:Flipper Style="{StaticResource MaterialDesignCardFlipper}">
+        <md:Flipper.FrontContent>
+            <Grid Style="{StaticResource blueIfOpen}" Width="200" MinHeight="100">
+                <StackPanel Margin="20 10 10 0">
+                    <TextBlock Text="{Binding HostName}" Style="{StaticResource MaterialDesignBody2TextBlock}" 
+                                       TextWrapping="Wrap" TextAlignment="Right" />
+                    <TextBlock Text="{Binding Error}" Style="{StaticResource MaterialDesignCaptionTextBlock}" 
+                                       TextWrapping="Wrap" FontSize="11" Margin="0 0 0 30" Foreground="Red" />
+                </StackPanel>
+                <Button Command="{Binding StartScanCmd}" Style="{StaticResource playPause}"
+                                IsEnabled="{Binding JobNotifier.IsCompleted, FallbackValue=true}"
+                                Visibility="{Binding JobNotifier.IsCompleted, FallbackValue=true, Converter={StaticResource BoolToVis}}">
+                    <md:PackIcon Kind="Play" />
+                </Button>
+                <Button Command="{Binding StopScanCmd}" Style="{StaticResource playPause}"
+                                IsEnabled="{Binding JobNotifier.IsNotCompleted, FallbackValue=false}"
+                                Visibility="{Binding JobNotifier.IsNotCompleted, FallbackValue=false, Converter={StaticResource BoolToVis}}">
+                    <md:PackIcon Kind="Pause" />
+                </Button>
+                <ProgressBar Height="5" VerticalAlignment="Bottom"
+                                     Value="{Binding StepCount, Mode=OneWay}" Maximum="{Binding StepMax}" />
+                <Button Style="{StaticResource MaterialDesignIconButton}" 
+                        Command="{x:Static md:Flipper.FlipCommand}"
+                        HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                    <md:PackIcon Kind="Edit" Width="20" Height="20" />
+                </Button>
+            </Grid>
+        </md:Flipper.FrontContent>
+
+        <md:Flipper.BackContent>
+            <StackPanel Width="200" MinHeight="100">
+                <md:ColorZone Mode="Accent" Padding="6 0 0 0">
+                    <Grid>
+                        <Button Style="{StaticResource MaterialDesignToolForegroundButton}"
+                                Command="{x:Static md:Flipper.FlipCommand}" HorizontalAlignment="Left">
+                            <md:PackIcon Kind="ArrowLeft" HorizontalAlignment="Right" />
+                        </Button>
+                        <TextBlock Margin="30 0 0 0" VerticalAlignment="Center">
+                            Edit Host
+                        </TextBlock>
+
+                        <Button Style="{StaticResource MaterialDesignIconButton}" HorizontalAlignment="Right">
+                            <md:PackIcon Kind="Delete" Width="24" Height="24" Foreground="Red" />
+                        </Button>
+
+                    </Grid>
+                </md:ColorZone>
+                <TextBox Text="{Binding HostName}" Margin="10" />
+            </StackPanel>
+        </md:Flipper.BackContent>
+    </md:Flipper>
+</UserControl>

@@ -1,17 +1,15 @@
-﻿using CommonLib.ExceptionTools;
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
+using CommonLib.ExceptionTools;
 using MvvmCross.Commands;
 using MvvmCross.ViewModels;
 using PortClosedEmailer.Core.ScannerLooping;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace PortClosedEmailer.Core.ViewModels
 {
     public class HostScanViewModel : MvxViewModel
     {
-        private string _dots;
-
         private readonly IScannerLooper _scanr;
         private CancellationTokenSource _cancelSrc;
 
@@ -26,9 +24,10 @@ namespace PortClosedEmailer.Core.ViewModels
 
 
         public string   HostName  { get; set; }
-        public string   Status    { get; private set; }
-        public string   Error     { get; private set; }
         public bool?    IsOpen    { get; private set; }
+        public int      StepCount { get; private set; }
+        public int      StepMax   { get; } = 4;
+        public string   Error     { get; private set; }
 
         public IMvxCommand   StartScanCmd  { get; }
         public IMvxCommand   StopScanCmd   { get; }
@@ -43,17 +42,14 @@ namespace PortClosedEmailer.Core.ViewModels
 
         private void DisplayOpen()
         {
-            _dots += " . ";
-            if (_dots.Length >= 15) _dots = " . ";
             IsOpen = true;
-            Status = $"Open [{_dots}]";
+            StepCount = StepCount >= StepMax ? 0 : ++StepCount;
         }
 
 
         private void DisplayClosed()
         {
             IsOpen = false;
-            Status = "Closed";
         }
 
 
@@ -67,7 +63,6 @@ namespace PortClosedEmailer.Core.ViewModels
         private void StopScanning()
         {
             _cancelSrc?.Cancel();
-            Status = "";
             IsOpen = null;
         }
 

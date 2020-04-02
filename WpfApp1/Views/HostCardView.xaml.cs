@@ -14,11 +14,11 @@ using System.Windows.Shapes;
 namespace WpfApp1.Views
 {
     /// <summary>
-    /// Interaction logic for HostsDataGrid.xaml
+    /// Interaction logic for HostCardView.xaml
     /// </summary>
-    public partial class HostsDataGrid : UserControl
+    public partial class HostCardView : UserControl
     {
-        public HostsDataGrid()
+        public HostCardView()
         {
             InitializeComponent();
         }

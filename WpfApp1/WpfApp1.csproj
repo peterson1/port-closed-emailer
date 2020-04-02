@@ -9,7 +9,7 @@
     <PublishSingleFile>true</PublishSingleFile>
     <IncludeSymbolsInSingleFile>true</IncludeSymbolsInSingleFile>
     <AssemblyName>PortClosedEmailerWPF</AssemblyName>
-    <Version>0.0.1-alpha-04</Version>
+    <Version>0.0.1-alpha-05</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

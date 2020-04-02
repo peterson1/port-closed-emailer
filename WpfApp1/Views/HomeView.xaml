@@ -5,18 +5,23 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WpfApp1.Views"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              xmlns:vms="clr-namespace:PortClosedEmailer.Core.ViewModels;assembly=PortClosedEmailer.Core"
              d:DataContext="{d:DesignInstance vms:HomeViewModel}"
              d:DesignHeight="450" d:DesignWidth="800">
     <StackPanel>
-        <local:HostsDataGrid />
+        <local:HostsListView1 HorizontalAlignment="Center" Margin="0 10 0 0" />
+        
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
             <TextBox x:Name="newHostTxt" Text="{Binding NewHostName, Mode=TwoWay}" VerticalAlignment="Center"
                      Width="300" Padding="10 5 5 5" VerticalContentAlignment="Center"
                      Visibility="{Binding ShowNewHostField, Converter={StaticResource BoolToVis}}" />
-            <Button x:Name="addHostBtn" Content="add host" Command="{Binding AddHostCmd}" IsDefault="True"
-                    HorizontalAlignment="Right" Padding="10 5 10 5" Margin="10 10 10 10" />
+            <Button x:Name="addHostBtn" Style="{StaticResource MaterialDesignFloatingActionAccentButton}"
+                    Command="{Binding AddHostCmd}" IsDefault="True"
+                    HorizontalAlignment="Right" Margin="0 0 30 30">
+                <md:PackIcon Kind="Add" Width="24" Height="24" />
+            </Button>
         </StackPanel>
     </StackPanel>
 </views:MvxWpfView>
