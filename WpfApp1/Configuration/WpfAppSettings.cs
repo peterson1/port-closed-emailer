@@ -1,9 +1,5 @@
-﻿using CommonLib.StringTools;
+﻿using System.Collections.Generic;
 using PortClosedEmailer.Core.Configuration;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 
 namespace WpfApp1.Configuration
 {

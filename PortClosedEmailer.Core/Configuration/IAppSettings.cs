@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace PortClosedEmailer.Core.Configuration
 {
@@ -15,6 +16,8 @@ namespace PortClosedEmailer.Core.Configuration
         int?     SmtpPortNumber       { get; }
         bool?    SmtpEnableSSL        { get; }
         int?     LoopDelaySeconds     { get; }
+
+        Task     SaveCurrentValues    ();
     }
 
 

@@ -62,11 +62,9 @@
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
                             <Button Content="Start" Command="{Binding StartScanCmd}" 
-                                        Padding="0 10 0 10" Width="80"
                                         IsEnabled="{Binding JobNotifier.IsCompleted, FallbackValue=true}"
                                         Visibility="{Binding JobNotifier.IsCompleted, FallbackValue=true, Converter={StaticResource BoolToVis}}" />
                             <Button Content="Stop" Command="{Binding StopScanCmd}" 
-                                        Padding="0 10 0 10" Width="80"
                                         IsEnabled="{Binding JobNotifier.IsNotCompleted, FallbackValue=false}"
                                         Visibility="{Binding JobNotifier.IsNotCompleted, FallbackValue=false, Converter={StaticResource BoolToVis}}"/>
                         </StackPanel>

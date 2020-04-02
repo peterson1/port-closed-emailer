@@ -15,7 +15,7 @@ namespace WpfApp1
         protected override IMvxApplication CreateApp()
         {
             //GlobalErrors.HandleAll();
-            var cfg = WpfAppSettings.LoadJson("appsettings.json");
+            var cfg = WpfAppSettings.LoadJson();
             try
             {
                 return new PortClosedEmailer.Core.App(cfg);

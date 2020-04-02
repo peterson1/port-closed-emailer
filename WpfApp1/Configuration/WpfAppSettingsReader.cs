@@ -12,15 +12,16 @@ namespace WpfApp1.Configuration
 {
     public partial class WpfAppSettings
     {
+        private const string JSON_FILE = "appsettings.json";
 
-        public static IAppSettings LoadJson(string jsonFilename)
+        public static IAppSettings LoadJson()
         {
             //todo: handle missing config
-            if (!File.Exists(jsonFilename))
-                CreateDefaultSettingsFile(jsonFilename);
+            if (!File.Exists(JSON_FILE))
+                CreateDefaultSettingsFile(JSON_FILE);
             try
             {
-                var json = File.ReadAllText(jsonFilename);
+                var json = File.ReadAllText(JSON_FILE);
                 var cfg = JsonConvert.DeserializeObject<WpfAppSettings>(json);
                 cfg.LoadExternalLists();
                 cfg.SetDefaultValues();
@@ -30,10 +31,10 @@ namespace WpfApp1.Configuration
             catch (Exception ex)
             {
                 var msg = ex.Info(false, false) + L.F
-                      + $"Please edit the file “{jsonFilename}”" + L.f
+                      + $"Please edit the file “{JSON_FILE}”" + L.f
                       +  "and correct the invalid values.";
                 //MessageBox.Show(msg, $"Invalid {jsonFilename}");
-                Alert.ShowModal($"Invalid {jsonFilename}", msg);
+                Alert.ShowModal($"Invalid {JSON_FILE}", msg);
                 App.Current.Shutdown();
                 return null;
             }

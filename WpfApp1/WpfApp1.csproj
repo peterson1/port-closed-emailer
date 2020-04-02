@@ -9,7 +9,7 @@
     <PublishSingleFile>true</PublishSingleFile>
     <IncludeSymbolsInSingleFile>true</IncludeSymbolsInSingleFile>
     <AssemblyName>PortClosedEmailerWPF</AssemblyName>
-    <Version>0.0.1-alpha-02</Version>
+    <Version>0.0.1-alpha-04</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -29,11 +29,13 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="MaterialDesignThemes" Version="3.0.1" />
     <PackageReference Include="MvvmCross.Platforms.Wpf" Version="6.4.2" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="PropertyChanged.Fody" Version="3.2.7" />
     <PackageReference Include="Serilog" Version="2.9.0" />
     <PackageReference Include="Serilog.Sinks.File" Version="4.1.0" />
+    <PackageReference Include="ShowMeTheXAML.MSBuild" Version="1.0.12" />
   </ItemGroup>
 
   <ItemGroup>

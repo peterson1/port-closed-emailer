@@ -18,7 +18,7 @@ namespace WpfApp1.Views
             newHostTxt.KeyUp += (s, e) =>
             {
                 if (e.Key == Key.Enter)
-                    ((HomeViewModel)DataContext).AddHost(newHostTxt.Text);
+                    ((HomeViewModel)DataContext).AddHost(newHostTxt.Text, true);
             };
         }
     }

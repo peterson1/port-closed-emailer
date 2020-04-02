@@ -14,14 +14,14 @@ namespace PortClosedEmailer.Core.ViewModels
     {
         public HomeViewModel(IAppSettings appSettings, IMvxLogProvider mvxLogProvider) : base(appSettings, mvxLogProvider)
         {
-            AddHostCmd = new MvxCommand(() => AddHost(NewHostName));
+            AddHostCmd = new MvxCommand(() => AddHost(NewHostName, true));
         }
 
 
         public override async Task Initialize()
         {
             await base.Initialize();
-            _cfg.HostsList.ForEach(_ => AddHost(_));
+            _cfg.HostsList.ForEach(_ => AddHost(_, false));
             ShowNewHostField = false;
             LogInfo("App initialized.");
         }
@@ -33,7 +33,7 @@ namespace PortClosedEmailer.Core.ViewModels
 
         public bool ShowNewHostField { get; private set; }
 
-        public void AddHost(string hostAndPort)
+        public void AddHost(string hostAndPort, bool saveHostToCfg)
         {
             ShowNewHostField = true;
             if (hostAndPort.IsBlank()) return;
@@ -44,6 +44,12 @@ namespace PortClosedEmailer.Core.ViewModels
             vm.StartScanCmd.Execute();
             NewHostName = "";
             ShowNewHostField = false;
+
+            if (saveHostToCfg)
+            {
+                _cfg.HostsList.Add(hostAndPort);
+                _cfg.SaveCurrentValues();
+            }
         }
     }
 }
