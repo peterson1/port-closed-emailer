@@ -13,7 +13,7 @@ namespace Tests.EmailSending
         public Task Sendsemail(string credsFilename)
         {
             var cfg = new TestSettings(credsFilename);
-            var sut = new SmtpClientSender1(cfg);
+            var sut = new SmtpClientSender1(cfg, null);
             return sut.SendPortClosedAlert("samplehost:123");
         }
     }

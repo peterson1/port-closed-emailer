@@ -32,15 +32,15 @@ namespace WpfApp1.WpfTools
         }
 
 
-        public static string GetShortVersion()
-        {
-            var exe = GetFullPath();
-            return exe.IsBlank() ? "" : exe.GetShortVersion();
-        }
+        //public static string GetShortVersion()
+        //{
+        //    var exe = GetFullPath();
+        //    return exe.IsBlank() ? "" : exe.GetShortVersion();
+        //}
 
 
-        public static string ShortNameAndVersion()
-            => $"{GetShortName()} v{GetShortVersion()}";
+        //public static string ShortNameAndVersion()
+        //    => $"{GetShortName()} v{GetShortVersion()}";
 
 
         public static void Shutdown()
@@ -72,16 +72,16 @@ namespace WpfApp1.WpfTools
 
 
         private static string GetVersion(this string filePath)
-            => FileVersionInfo.GetVersionInfo(filePath).FileVersion;
+            => FileVersionInfo.GetVersionInfo(filePath).ProductVersion;
 
 
-        private static string GetShortVersion(this string filePath)
-        {
-            var ver = filePath.GetVersion();
-            if (ver.IsBlank()) return "";
-            var ss = ver.Split('.');
-            if (ss.Length != 4) return ver;
-            return $"{ss[2]}.{int.Parse(ss[3])}";
-        }
+        //private static string GetShortVersion(this string filePath)
+        //{
+        //    var ver = filePath.GetVersion();
+        //    if (ver.IsBlank()) return "";
+        //    var ss = ver.Split('.');
+        //    if (ss.Length != 4) return ver;
+        //    return $"{ss[2]}.{int.Parse(ss[3])}";
+        //}
     }
 }

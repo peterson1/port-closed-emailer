@@ -1,8 +1,6 @@
 ﻿using FluentAssertions;
-using PortClosedEmailer.Core.Configuration;
-using System;
 using System.IO;
-using WpfApp1;
+using WpfApp1.Configuration;
 using static System.Environment;
 
 namespace Tests.Configuration

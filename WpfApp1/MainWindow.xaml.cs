@@ -1,4 +1,6 @@
-﻿using MvvmCross.Platforms.Wpf.Views;
+﻿using System;
+using MvvmCross.Platforms.Wpf.Views;
+using WpfApp1.WpfTools;
 
 namespace WpfApp1
 {
@@ -7,6 +9,13 @@ namespace WpfApp1
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+
+        protected override void OnInitialized(EventArgs e)
+        {
+            base.OnInitialized(e);
+            this.Title += $"  {CurrentExe.GetVersion()}";
         }
     }
 }

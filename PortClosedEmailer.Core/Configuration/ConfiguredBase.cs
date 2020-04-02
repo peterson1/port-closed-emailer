@@ -12,7 +12,7 @@ namespace PortClosedEmailer.Core.Configuration
         public ConfiguredBase(IAppSettings appSettings, IMvxLogProvider mvxLogProvider)
         {
             _cfg = appSettings ?? throw new ArgumentNullException();
-            _log = mvxLogProvider.GetLogFor(this.GetType());
+            _log = mvxLogProvider?.GetLogFor(this.GetType());
         }
     }
 }
