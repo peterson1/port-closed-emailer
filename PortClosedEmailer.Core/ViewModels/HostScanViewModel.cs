@@ -15,7 +15,7 @@ namespace PortClosedEmailer.Core.ViewModels
 
         public HostScanViewModel(IScannerLooper scannerLooper)
         {
-            _scanr       = scannerLooper ?? throw new ArgumentNullException();
+            _scanr = scannerLooper ?? throw new ArgumentNullException();
             _scanr.FoundOpen   += (s, e) => DisplayOpen();
             _scanr.FoundClosed += (s, e) => DisplayClosed();
             StartScanCmd = new MvxCommand(() => JobNotifier = CreateNotifier());
@@ -23,11 +23,11 @@ namespace PortClosedEmailer.Core.ViewModels
         }
 
 
-        public string   HostName  { get; set; }
-        public bool?    IsOpen    { get; private set; }
-        public int      StepCount { get; private set; }
-        public int      StepMax   { get; } = 4;
-        public string   Error     { get; private set; }
+        public string   HostName   { get; set; }
+        public bool?    IsOpen     { get; private set; }
+        public int      StepCount  { get; private set; }
+        public int      StepMax    { get; } = 4;
+        public string   Error      { get; private set; }
 
         public IMvxCommand   StartScanCmd  { get; }
         public IMvxCommand   StopScanCmd   { get; }

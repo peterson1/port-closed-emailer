@@ -28,6 +28,7 @@ namespace PortClosedEmailer.Core
             AddTransient<IScannerLooper, ScannerLooper1>();
 
             Mvx.IoCProvider.RegisterType<HostScanViewModel>();
+            Mvx.IoCProvider.RegisterType<AddNewHostViewModel>();
 
             RegisterAppStart<HomeViewModel>();
         }

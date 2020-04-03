@@ -63,23 +63,24 @@
 
         <md:Flipper.BackContent>
             <StackPanel Width="200" MinHeight="100">
-                <md:ColorZone Mode="Accent" Padding="6 0 0 0">
-                    <Grid>
-                        <Button Style="{StaticResource MaterialDesignToolForegroundButton}"
-                                Command="{x:Static md:Flipper.FlipCommand}" HorizontalAlignment="Left">
-                            <md:PackIcon Kind="ArrowLeft" HorizontalAlignment="Right" />
-                        </Button>
-                        <TextBlock Margin="30 0 0 0" VerticalAlignment="Center">
-                            Edit Host
-                        </TextBlock>
+                <TextBox Text="{Binding HostName}" Margin="10 10 10 0" TextWrapping="Wrap" 
+                         TextAlignment="Right" VerticalAlignment="Top" />
 
-                        <Button Style="{StaticResource MaterialDesignIconButton}" HorizontalAlignment="Right">
+                <DockPanel>
+                    <Button DockPanel.Dock="Left"
+                            Style="{StaticResource MaterialDesignFlatButton}"
+                            Command="{x:Static md:Flipper.FlipCommand}" 
+                            VerticalAlignment="Bottom" Margin="0 0 0 7">
+                        <md:PackIcon Kind="ArrowLeft" />
+                    </Button>
+                    
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                        <Button Style="{StaticResource MaterialDesignIconButton}">
                             <md:PackIcon Kind="Delete" Width="24" Height="24" Foreground="Red" />
                         </Button>
-
-                    </Grid>
-                </md:ColorZone>
-                <TextBox Text="{Binding HostName}" Margin="10" />
+                        <Button Content="save" IsDefault="True" Margin="0 0 12 0" />
+                    </StackPanel>
+                </DockPanel>
             </StackPanel>
         </md:Flipper.BackContent>
     </md:Flipper>

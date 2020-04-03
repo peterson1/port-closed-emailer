@@ -15,8 +15,9 @@
                  TextOptions.TextRenderingMode="Auto"
                  mc:Ignorable="d"
                  Title="Port-closed Emailer" 
+                 UseLayoutRounding="True"
                  WindowStartupLocation="CenterScreen"
-                 Width="800" SizeToContent="Height">
+                 Width="670" SizeToContent="Height">
     <Grid>
 
     </Grid>
