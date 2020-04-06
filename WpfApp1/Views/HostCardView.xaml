@@ -39,7 +39,7 @@
                     <TextBlock Text="{Binding HostName}" Style="{StaticResource MaterialDesignBody2TextBlock}" 
                                        TextWrapping="Wrap" TextAlignment="Right" />
                     <TextBlock Text="{Binding Error}" Style="{StaticResource MaterialDesignCaptionTextBlock}" 
-                                       TextWrapping="Wrap" FontSize="11" Margin="0 0 0 30" Foreground="Red" />
+                                       TextWrapping="Wrap" FontSize="11" Margin="0 0 0 30" Foreground="White" />
                 </StackPanel>
                 <Button Command="{Binding StartScanCmd}" Style="{StaticResource playPause}"
                                 IsEnabled="{Binding JobNotifier.IsCompleted, FallbackValue=true}"

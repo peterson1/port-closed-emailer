@@ -12,7 +12,7 @@
     <md:DialogHost x:Name="dlgHost">
         <md:DialogHost.DialogContent>
             <StackPanel Margin="30 30 20 20">
-                <TextBox x:Name="hostTxt" Text="{Binding NewHostName}" 
+                <TextBox x:Name="hostTxt" Text="{Binding NewHostName, UpdateSourceTrigger=PropertyChanged}" 
                          md:HintAssist.Hint="host name and port number" 
                          MinWidth="300" Padding="5 0 0 0" />
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 7 0 0">

@@ -26,7 +26,8 @@ namespace WpfApp1.Configuration
         public void SetDefaultValues()
         {
             RecipientEmail      = RecipientEmail      ?? "";
-            SenderDisplayName   = SenderDisplayName   ?? "";
+            SenderEmail         = SenderEmail         ?? "port@closed.emailer";
+            SenderDisplayName   = SenderDisplayName   ?? "Port-closed Emailer";
             SmtpHostName        = SmtpHostName        ?? "";
             SmtpCredentialsFile = SmtpCredentialsFile ?? "";
             HostsListFile       = HostsListFile       ?? "";
@@ -41,7 +42,6 @@ namespace WpfApp1.Configuration
                 }
             };
 
-            SenderEmail      = SenderEmail      ?? "";
             SmtpPortNumber   = SmtpPortNumber   ?? 587;
             SmtpEnableSSL    = SmtpEnableSSL    ?? true;
             LoopDelaySeconds = LoopDelaySeconds ?? 2;

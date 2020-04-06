@@ -10,7 +10,6 @@ namespace PortClosedEmailer.Core.ViewModels
     {
         public HomeViewModel(AddNewHostViewModel addNewHostViewModel, IAppSettings appSettings, IMvxLogProvider mvxLogProvider) : base(appSettings, mvxLogProvider)
         {
-            //AddHostCmd = new MvxCommand(() => AddHost(NewHostName, true));
             AddHostVM  = addNewHostViewModel ?? throw new ArgumentNullException();
             AddHostVM.HostInitialized += (s, e) => Hosts.Add(e);
         }
